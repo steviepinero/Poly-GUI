@@ -1,4 +1,3 @@
-import json
 import os
 import time
 from typing import List
@@ -6,6 +5,7 @@ from typing import List
 import dotenv
 import requests
 from pydantic import BaseModel
+from security import safe_requests
 
 
 dotenv.load_dotenv()
@@ -118,12 +118,12 @@ class HangarClient:
     def getStatus(self, deployerResponse: dict):
 
         sessionId = deployerResponse["apply_job_id"]
-        response = requests.get(f"{HangarURL}/status/{sessionId}", json={}, headers=self.headers)
+        response = safe_requests.get(f"{HangarURL}/status/{sessionId}", json={}, headers=self.headers)
 
 
         while not response.ok:
             time.sleep(5)
-            response = requests.get(f"{HangarURL}/status/{sessionId}", json={}, headers=self.headers)
+            response = safe_requests.get(f"{HangarURL}/status/{sessionId}", json={}, headers=self.headers)
 
         return response.json()
 
