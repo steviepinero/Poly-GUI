@@ -2,12 +2,11 @@ import os
 from dotenv import load_dotenv
 from autogen import AssistantAgent, UserProxyAgent, config_list_from_json
 import autogen
-import requests
 from datetime import datetime
 import http.client
 import json
-import base64
 import replicate
+from security import safe_requests
 
 
 load_dotenv("../.env")
@@ -85,7 +84,7 @@ def text_to_image_generation(prompt):
         shortened_prompt = prompt[:50]
         filename = f"imgs/{shortened_prompt}_{current_time}.png"
 
-        response = requests.get(image_url, timeout=300)
+        response = safe_requests.get(image_url, timeout=300)
         if response.status_code == 200:
             with open(filename, "wb") as file:
                 file.write(response.content)
