@@ -107,12 +107,12 @@ class HangarClient:
     def provision(self, workspaces: List[Workspace]):
         payload = self.form_payload(workspaces)
 
-        response = requests.post(f"{HangarURL}/apply", json=payload, headers=self.headers)
+        response = requests.post(f"{HangarURL}/apply", json=payload, headers=self.headers, timeout=60)
         return response.json()
 
     def deploy(self, project: HangarProject, githubRepoUrl: str):
         # Assuming `buildDefinition` is a dictionary with the build configuration
-        response = requests.post(f"{HangarURL}/execute", json=project.makeBuildPayload(namespace=self.namespace, githubRepoUrl=githubRepoUrl), headers=self.headers)
+        response = requests.post(f"{HangarURL}/execute", json=project.makeBuildPayload(namespace=self.namespace, githubRepoUrl=githubRepoUrl), headers=self.headers, timeout=60)
         return response.json()
 
     def getStatus(self, deployerResponse: dict):
