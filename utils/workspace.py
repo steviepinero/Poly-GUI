@@ -5,29 +5,35 @@ from pathlib import Path
 
 
 class Workspace(abc.ABC):
-    @abc.abstractclassmethod
+    @classmethod
+    @abc.abstractmethod
     def __init__(self, base_path: str) -> None:
         self.base_path = base_path
 
-    @abc.abstractclassmethod
+    @classmethod
+    @abc.abstractmethod
     def read(self, task_id: str, path: str) -> bytes:
         pass
 
-    @abc.abstractclassmethod
+    @classmethod
+    @abc.abstractmethod
     def write(self, task_id: str, path: str, data: bytes) -> None:
         pass
 
-    @abc.abstractclassmethod
+    @classmethod
+    @abc.abstractmethod
     def delete(
         self, task_id: str, path: str, directory: bool = False, recursive: bool = False
     ) -> None:
         pass
 
-    @abc.abstractclassmethod
+    @classmethod
+    @abc.abstractmethod
     def exists(self, task_id: str, path: str) -> bool:
         pass
 
-    @abc.abstractclassmethod
+    @classmethod
+    @abc.abstractmethod
     def list(self, task_id: str, path: str) -> typing.List[str]:
         pass
 
